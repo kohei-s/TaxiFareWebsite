@@ -31,7 +31,14 @@ q3 = st.text_input('pickup latitude')
 q4 = st.text_input('dropoff longitude')
 q5 = st.text_input('dropoff latitude')
 q6 = st.text_input('passenger count')
-
+params = {
+    'pickup_datetime': dt,
+    'pickup_longitude': q2,
+    'pickup_latitude': q3,
+    'dropoff_longitude': q4,
+    'dropoff_latitude': q5,
+    'passenger_count': q6
+}
 
 st.markdown(
         'Maybe you want to use your own API for the prediction, not the one provided by Le Wagon...'
@@ -58,11 +65,8 @@ See ? No need to load a `model.joblib` file in this app, we do not even need to 
 '''
 url = 'https://taxifare.lewagon.ai/predict'
 
-r = requests.get(
-    url +
-    f'?pickup_datetime={dt}&pickup_longitude={q2}&pickup_latitude={q3}&dropoff_longitude={q4}&dropoff_latitude={q5}&passenger_count={q6}'
-)
-st.write(r.json())
+r = requests.get(url, params=params)
+st.write(r.json()['prediction'])
 
 # if url == 'https://taxifare.lewagon.ai/predict':
 
